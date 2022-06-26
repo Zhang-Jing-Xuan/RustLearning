@@ -25,4 +25,9 @@ fn main() {
     let_me_see2(s1);
     // println!("{}", s1);
 
+    let mut ss:String=String::from("Hello world!");
+    let ss1=& mut ss;
+    println!("{}",ss1);
+    println!("{}",ss);
+
 }

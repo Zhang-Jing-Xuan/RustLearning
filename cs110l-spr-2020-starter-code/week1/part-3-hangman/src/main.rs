@@ -57,12 +57,9 @@ fn main() {
     while success!=true && incorrect_guesses<NUM_INCORRECT_GUESSES{
         io::stdin().read_line(&mut guess).expect("Error reading input");
         guess =guess.trim().replace("\\s*|\t|\r|\n", "");
-        let mut guess_chars:Vec<char>=guess.chars().collect();
-        // println!("{}",guess_chars[guess_chars.len()-1]);
-        // println!("{}",secret_word);  
+        let mut guess_chars:Vec<char>=guess.chars().collect(); 
         let mut suc:bool=false;
         let check:char=guess_chars[guess_chars.len()-1];
-        // todo: check if guess_chars shoud add to guessed_chars
         guessed_chars.push(check);
         if secret_word_chars.contains(&check){
             suc=true;

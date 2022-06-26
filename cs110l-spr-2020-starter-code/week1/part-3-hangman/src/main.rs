@@ -34,7 +34,85 @@ fn main() {
     // secret_word by doing secret_word_chars[i].
     let secret_word_chars: Vec<char> = secret_word.chars().collect();
     // Uncomment for debugging:
-    // println!("random word: {}", secret_word);
+    println!("random word: {}", secret_word);
 
     // Your code here! :)
+    let mut success:bool=false;
+    let mut incorrect_guesses:u32=0;
+    let mut guessed_chars:Vec<char>=Vec::new();
+    println!("Welcome to CS110L Hangman!");
+    print!("The word so far is ");
+    for i in secret_word_chars.iter(){
+        print!("-");
+    }
+    println!("");
+    println!("You have guessed the following letters:");
+    println!("You have {} guesses left", NUM_INCORRECT_GUESSES);
+    print!("Please guess a letter: ");
+    io::stdout()
+    .flush()
+    .expect("Error flushing stdout.");
+    let mut guess:String=String::new();
+    let mut success:bool=false;
+    while success!=true && incorrect_guesses<NUM_INCORRECT_GUESSES{
+        io::stdin().read_line(&mut guess).expect("Error reading input");
+        guess =guess.trim().replace("\\s*|\t|\r|\n", "");
+        let mut guess_chars:Vec<char>=guess.chars().collect();
+        // println!("{}",guess_chars[guess_chars.len()-1]);
+        // println!("{}",secret_word);  
+        let mut suc:bool=false;
+        let check:char=guess_chars[guess_chars.len()-1];
+        // todo: check if guess_chars shoud add to guessed_chars
+        guessed_chars.push(guess_chars[guess_chars.len()-1]);
+        if secret_word_chars.contains(&check){
+            suc=true;
+        }
+        if suc==false{
+            incorrect_guesses+=1;
+            println!("Sorry, that letter is not in the word");
+            println!("");
+            print!("The word so far is ");
+            for i in secret_word_chars.iter(){
+                if guessed_chars.contains(i){
+                    print!("{}",*i);
+                }else{
+                    print!("-");
+                }
+            }
+            println!("");
+        }else{
+            suc=false;
+            success=true;
+            println!("");
+            print!("The word so far is ");
+            for i in secret_word_chars.iter(){
+                if guessed_chars.contains(i){
+                    print!("{}",*i);
+                }else{
+                    print!("-");
+                    success=false;
+                }
+            }
+            println!("");
+        }
+        if NUM_INCORRECT_GUESSES-incorrect_guesses==0{
+            println!("");
+            println!("Sorry, you ran out of guesses!");
+            break;
+        }else if success==true{
+            println!("");
+            println!("Congratulations you guessed the secret word: {}!",secret_word);
+            break;
+        }
+        print!("You have guessed the following letters:");
+        for i in guessed_chars.iter(){
+            print!("{}",*i);
+        }
+        println!("");
+        println!("You have {} guesses left", NUM_INCORRECT_GUESSES-incorrect_guesses);
+        print!("Please guess a letter: ");
+        io::stdout()
+        .flush()
+        .expect("Error flushing stdout.");
+    }
 }

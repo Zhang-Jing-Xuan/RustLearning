@@ -63,7 +63,7 @@ fn main() {
         let mut suc:bool=false;
         let check:char=guess_chars[guess_chars.len()-1];
         // todo: check if guess_chars shoud add to guessed_chars
-        guessed_chars.push(guess_chars[guess_chars.len()-1]);
+        guessed_chars.push(check);
         if secret_word_chars.contains(&check){
             suc=true;
         }
